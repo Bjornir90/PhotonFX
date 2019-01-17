@@ -6,15 +6,15 @@ import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 
 public class ParticleEmitter {
-    private float weight;
-    private float brigthness;
-    private float drag;
-    private float size;
-    private Color color, lightColor;
-    private float posX;
-    private float posY;
-    private float emissionDirectionX, emissionDirectionY, emissionDirectionVariation;
-    private ArrayList<Particle> particles;
+    protected float weight;
+    protected float brigthness;
+    protected float drag;
+    protected float size;
+    protected Color color, lightColor;
+    protected float posX;
+    protected float posY;
+    protected float emissionDirectionX, emissionDirectionY, emissionDirectionVariation;
+    protected ArrayList<Particle> particles;
 
     public ParticleEmitter(float weight, float brigthness, float drag, float size, Color color, Color lightColor, float posX, float posY) {
         this.weight = weight;

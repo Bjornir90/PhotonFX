@@ -7,15 +7,15 @@ import static engine.particle.ParticleEnvironment.gravityX;
 import static engine.particle.ParticleEnvironment.gravityY;
 
 public class Particle {
-    private float weight;
-    private float brigthness;
-    private float drag;
-    private float size;
-    private Color color, lightColor;
-    private float posX;
-    private float posY;
-    private float speedX;
-    private float speedY;
+    protected float weight;
+    protected float brigthness;
+    protected float drag;
+    protected float size;
+    protected Color color, lightColor;
+    protected float posX;
+    protected float posY;
+    protected float speedX;
+    protected float speedY;
 
     protected Particle(float weight, float brigthness, float drag, Color color, Color lightColor, float posX, float posY, float speedX, float speedY, float size) {
         this.weight = weight;
