@@ -33,7 +33,7 @@ public class FixedParticleEmitter extends ParticleEmitter {
     }
 
     @Override
-    public void setEmission(float emissionDirectionX, float emissionDirectionY, float emissionDirectionVariation) {
+    public void setEmission(float emissionDirectionX, float emissionDirectionY, float emissionDirectionVariationX, float emissionVariationY) {
         System.err.println("Warning, using setEmission method is unsupported on FixedParticleEmitter");
         throw new UnsupportedOperationException("SetEmission is not supported by FixedParticleEmitter, use a ParticleEmitter instead");
     }

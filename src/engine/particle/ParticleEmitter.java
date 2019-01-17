@@ -13,7 +13,7 @@ public class ParticleEmitter {
     protected Color color, lightColor;
     protected float posX;
     protected float posY;
-    protected float emissionDirectionX, emissionDirectionY, emissionDirectionVariation;
+    protected float emissionDirectionX, emissionDirectionY, emissionDirectionVariationX, emissionDirectionVariationY;
     protected int interval, timeSinceLastEmission;
     protected ArrayList<Particle> particles;
 
@@ -30,17 +30,18 @@ public class ParticleEmitter {
         interval = 0;
     }
 
-    public void setEmission(float emissionDirectionX, float emissionDirectionY, float emissionDirectionVariation){
+    public void setEmission(float emissionDirectionX, float emissionDirectionY, float emissionDirectionVariationX, float emissionDirectionVariationY){
         this.emissionDirectionX = emissionDirectionX;
         this.emissionDirectionY = emissionDirectionY;
-        this.emissionDirectionVariation = emissionDirectionVariation;
+        this.emissionDirectionVariationX = emissionDirectionVariationX;
+        this.emissionDirectionVariationY = emissionDirectionVariationY;
     }
 
     public void emitParticles(int quantity){
         for(int i=0; i<quantity; i++){
             float sign = (Math.random()<0.5)?-1.0f:1.0f;
-            float speedX = (float) (emissionDirectionX+Math.random()*emissionDirectionVariation*sign);
-            float speedY = (float) (emissionDirectionY+Math.random()*emissionDirectionVariation*sign);
+            float speedX = (float) (emissionDirectionX+Math.random()*emissionDirectionVariationX*sign);
+            float speedY = (float) (emissionDirectionY+Math.random()*emissionDirectionVariationY*sign);
             particles.add(new Particle(weight, brigthness, drag, color, lightColor, posX, posY, speedX, speedY, size));
         }
     }
