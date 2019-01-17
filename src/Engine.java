@@ -19,9 +19,52 @@ public class Engine extends BasicGame {
         ParticleEnvironment.windX = 0.4f;
         timeSinceWindChange = 0;
 
-        emitter = new ParticleEmitter(0.0f, 0.0f, 0.0001f, 2.0f, Color.red, null, 400, 400);
+        gameContainer.getInput().addKeyListener(new KeyListener() {
+            @Override
+            public void setInput(Input input) {
+
+            }
+
+            @Override
+            public boolean isAcceptingInput() {
+                return true;
+            }
+
+            @Override
+            public void inputEnded() {
+
+            }
+
+            @Override
+            public void inputStarted() {
+
+            }
+
+            @Override
+            public void keyPressed(int i, char c) {
+                switch(i){
+                    case Input.KEY_LEFT:
+                        ParticleEnvironment.windX = -0.4f;
+                        break;
+                    case Input.KEY_RIGHT:
+                        ParticleEnvironment.windX = 0.4f;
+                        break;
+                    case Input.KEY_ESCAPE:
+                        gameContainer.exit();
+                        break;
+                }
+            }
+
+            @Override
+            public void keyReleased(int i, char c) {
+
+            }
+        });
+
+
+        emitter = new ParticleEmitter(0.0f, 0.0f, 0.00001f, 2.0f, Color.white, null, 400, 400);
         emitter.setEmission(0.0f, -0.01f, 0.001f);
-        emitter.setInterval(500);
+        emitter.setInterval(50);
         emitter2 = new ParticleEmitter(0.00001f, 0.0f, 0.002f, 2.0f, Color.orange, null, 1000, 500);
         emitter2.setEmission(0.0f, -0.2f, 0.05f);
         fixedEmitters = new ArrayList<>();
@@ -51,14 +94,15 @@ public class Engine extends BasicGame {
         timeSinceWindChange += i;
         if(timeSinceWindChange > 1000){
             timeSinceWindChange = 0;
-            ParticleEnvironment.windX = -ParticleEnvironment.windX;
-            System.out.println("ParticleEnvironment.windX = " + ParticleEnvironment.windX);
+            //ParticleEnvironment.windX = -ParticleEnvironment.windX;
         }
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         emitter.drawParticles(graphics);
+        graphics.setColor(Color.red);
+        graphics.fillRect(400, 400, 4, 4);
         //emitter2.drawParticles(graphics);
         for(FixedParticleEmitter emitter : fixedEmitters){
             emitter.drawParticles(graphics);
