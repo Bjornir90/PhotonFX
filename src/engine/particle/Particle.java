@@ -38,8 +38,8 @@ public class Particle {
     }
 
     protected void update(int delta){
-        speedX += drag*ParticleEnvironment.windX + weight*gravityX;
-        speedY += drag*ParticleEnvironment.windY + weight*gravityY;
+        speedX += (drag*ParticleEnvironment.windX + weight*gravityX)*delta;
+        speedY += (drag*ParticleEnvironment.windY + weight*gravityY)*delta;
         posX += delta*speedX;
         posY += delta*speedY;
     }
