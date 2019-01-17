@@ -33,7 +33,7 @@ public class Particle {
     protected void render(Graphics g){
         Color oldColor = g.getColor();
         g.setColor(color);
-        g.drawRect(posX, posY, size, size);
+        g.fillRect(posX, posY, size, size);
         g.setColor(oldColor);
     }
 

@@ -19,8 +19,9 @@ public class Engine extends BasicGame {
         ParticleEnvironment.windX = 0.4f;
         timeSinceWindChange = 0;
 
-        emitter = new ParticleEmitter(0.0001f, 0.0f, 0.001f, 2.0f, Color.red, null, 400, 500);
-        emitter.setEmission(0.0f, -0.1f, 0.05f);
+        emitter = new ParticleEmitter(0.0f, 0.0f, 0.0001f, 2.0f, Color.red, null, 400, 400);
+        emitter.setEmission(0.0f, -0.01f, 0.001f);
+        emitter.setInterval(500);
         emitter2 = new ParticleEmitter(0.00001f, 0.0f, 0.002f, 2.0f, Color.orange, null, 1000, 500);
         emitter2.setEmission(0.0f, -0.2f, 0.05f);
         fixedEmitters = new ArrayList<>();
@@ -33,7 +34,7 @@ public class Engine extends BasicGame {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        //emitter.emitParticles(2);
+        //emitter.emitParticles(1);
         emitter.updateParticles(i);
         //emitter2.emitParticles(4);
         emitter2.updateParticles(i);
@@ -57,7 +58,7 @@ public class Engine extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        //emitter.drawParticles(graphics);
+        emitter.drawParticles(graphics);
         //emitter2.drawParticles(graphics);
         for(FixedParticleEmitter emitter : fixedEmitters){
             emitter.drawParticles(graphics);

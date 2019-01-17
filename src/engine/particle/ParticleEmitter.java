@@ -14,6 +14,7 @@ public class ParticleEmitter {
     protected float posX;
     protected float posY;
     protected float emissionDirectionX, emissionDirectionY, emissionDirectionVariation;
+    protected int interval, timeSinceLastEmission;
     protected ArrayList<Particle> particles;
 
     public ParticleEmitter(float weight, float brigthness, float drag, float size, Color color, Color lightColor, float posX, float posY) {
@@ -26,6 +27,7 @@ public class ParticleEmitter {
         this.posX = posX;
         this.posY = posY;
         particles = new ArrayList<>();
+        interval = 0;
     }
 
     public void setEmission(float emissionDirectionX, float emissionDirectionY, float emissionDirectionVariation){
@@ -50,8 +52,19 @@ public class ParticleEmitter {
     }
 
     public void updateParticles(int delta){
+        if(interval != 0){
+            timeSinceLastEmission += delta;
+            if(timeSinceLastEmission >= interval){
+                emitParticles(1);
+                timeSinceLastEmission = 0;
+            }
+        }
         for(Particle p : particles){
             p.update(delta);
         }
+    }
+
+    public void setInterval(int milliseconds){
+        interval = milliseconds;
     }
 }
