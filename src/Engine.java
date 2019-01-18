@@ -67,14 +67,14 @@ public class Engine extends BasicGame {
         });
 
 
-        emitter = new ParticleEmitter(0.0f, 0.0f, 0.00001f, 2.0f, Color.white, null, 400, 400);
+        emitter = new ParticleEmitter(0.0f, 0.0f, 0.00001f, 2.0f, Color.white, null, 400, 400, 8000);
         emitter.setEmission(0.0f, -0.01f, 0.002f, 0.0f);
         emitter.setInterval(50);
-        emitter2 = new ParticleEmitter(0.0001f, 0.0f, 0.000002f, 2.0f, Color.blue, null, 1000, 450);
+        emitter2 = new ParticleEmitter(0.0001f, 0.0f, 0.000002f, 2.0f, Color.blue, null, 1000, 450, 4000);
         emitter2.setEmission(0.0f, -0.2f, 0.05f, 0.02f);
         fixedEmitters = new ArrayList<>();
         for(int i = 0; i<310; i++){
-            FixedParticleEmitter emitter = new FixedParticleEmitter(0.0f, 0.0f, 0.0002f+(float)(Math.random()/10000), 2.0f, Color.green, null,35+i*6.0f, 500, 0.0f, 2.0f);
+            FixedParticleEmitter emitter = new FixedParticleEmitter(0.0f, 0.0f, 0.0002f+(float)(Math.random()/10000), 2.0f, Color.green, null,35+i*6.0f, 500, 0.0f, 2.0f, 0);
             emitter.emitParticles(7+(int)(Math.random()*5));
             fixedEmitters.add(emitter);
         }

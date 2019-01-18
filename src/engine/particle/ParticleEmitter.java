@@ -15,10 +15,10 @@ public class ParticleEmitter {
     protected float posX;
     protected float posY;
     protected float emissionDirectionX, emissionDirectionY, emissionDirectionVariationX, emissionDirectionVariationY;
-    protected int interval, timeSinceLastEmission;
+    protected int interval, timeSinceLastEmission, lifetime;
     protected ArrayList<Particle> particles;
 
-    public ParticleEmitter(float weight, float brigthness, float drag, float size, Color color, Color lightColor, float posX, float posY) {
+    public ParticleEmitter(float weight, float brigthness, float drag, float size, Color color, Color lightColor, float posX, float posY, int lifetime) {
         this.weight = weight;
         this.brigthness = brigthness;
         this.drag = drag;
@@ -27,6 +27,7 @@ public class ParticleEmitter {
         this.lightColor = lightColor;
         this.posX = posX;
         this.posY = posY;
+        this.lifetime = lifetime;
         particles = new ArrayList<>();
         interval = 0;
     }
@@ -43,7 +44,7 @@ public class ParticleEmitter {
             float sign = (Math.random()<0.5)?-1.0f:1.0f;
             float speedX = (float) (emissionDirectionX+Math.random()*emissionDirectionVariationX*sign);
             float speedY = (float) (emissionDirectionY+Math.random()*emissionDirectionVariationY*sign);
-            particles.add(new Particle(weight, brigthness, drag, color, lightColor, posX, posY, speedX, speedY, size));
+            particles.add(new Particle(weight, brigthness, drag, color, lightColor, posX, posY, speedX, speedY, size, lifetime));
         }
     }
 
@@ -61,9 +62,15 @@ public class ParticleEmitter {
                 timeSinceLastEmission = 0;
             }
         }
+        ArrayList<Particle> toBeDeleted = new ArrayList<>();
         for(Particle p : particles){
-            p.update(delta);
+            try {
+                p.update(delta);
+            } catch (EndOfLifeException e){
+                toBeDeleted.add(p);
+            }
         }
+        particles.removeAll(toBeDeleted);
     }
 
     public void setInterval(int milliseconds){

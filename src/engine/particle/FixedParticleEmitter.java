@@ -18,8 +18,8 @@ public class FixedParticleEmitter extends ParticleEmitter {
      * @param intervalX the interval between each spawned particles on the x axis
      * @param intervalY the interval between each spawned particles on the y axis
      */
-    public FixedParticleEmitter(float weight, float brigthness, float drag, float size, Color color, Color lightColor, float posX, float posY, float intervalX, float intervalY) {
-        super(weight, brigthness, drag, size, color, lightColor, posX, posY);
+    public FixedParticleEmitter(float weight, float brigthness, float drag, float size, Color color, Color lightColor, float posX, float posY, float intervalX, float intervalY, int lifetime) {
+        super(weight, brigthness, drag, size, color, lightColor, posX, posY, lifetime);
         this.intervalX = intervalX;
         this.intervalY = intervalY;
     }
@@ -27,7 +27,7 @@ public class FixedParticleEmitter extends ParticleEmitter {
     @Override
     public void emitParticles(int quantity) {
         for(int i=0; i<quantity; i++){
-            ConstrainedParticle particle = new ConstrainedParticle(weight, brigthness, drag, color, lightColor, posX+intervalX*i, posY-intervalY*i, 0.0f, 0.0f, size, 2.0f*i, 0.0f, 2.0f*i, 0.0f);
+            ConstrainedParticle particle = new ConstrainedParticle(weight, brigthness, drag, color, lightColor, posX+intervalX*i, posY-intervalY*i, 0.0f, 0.0f, size, 2.0f*i, 0.0f, 2.0f*i, 0.0f, lifetime);
             particles.add(particle);
         }
     }

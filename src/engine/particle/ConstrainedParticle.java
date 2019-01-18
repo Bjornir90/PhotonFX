@@ -22,8 +22,8 @@ public class ConstrainedParticle extends Particle {
      * @param maxX relative positive displacement on x axis
      * @param maxY relative positive displacement on y axis
      */
-    public ConstrainedParticle(float weight, float brigthness, float drag, Color color, Color lightColor, float posX, float posY, float speedX, float speedY, float size, float minX, float minY, float maxX, float maxY) {
-        super(weight, brigthness, drag, color, lightColor, posX, posY, speedX, speedY, size);
+    public ConstrainedParticle(float weight, float brigthness, float drag, Color color, Color lightColor, float posX, float posY, float speedX, float speedY, float size, float minX, float minY, float maxX, float maxY, int lifetime) {
+        super(weight, brigthness, drag, color, lightColor, posX, posY, speedX, speedY, size, lifetime);
         this.minX = minX;
         this.minY = minY;
         this.maxX = maxX;
@@ -33,7 +33,7 @@ public class ConstrainedParticle extends Particle {
     }
 
     @Override
-    protected void update(int delta) {
+    protected void update(int delta) throws EndOfLifeException {
         super.update(delta);
         if(posX<originX-minX){
             posX = originX-minX;

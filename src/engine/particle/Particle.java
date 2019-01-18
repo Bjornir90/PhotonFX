@@ -17,8 +17,9 @@ public class Particle {
     protected float posY;
     protected float speedX;
     protected float speedY;
+    protected int lifetime, timeSinceCreation;
 
-    protected Particle(float weight, float brigthness, float drag, Color color, Color lightColor, float posX, float posY, float speedX, float speedY, float size) {
+    protected Particle(float weight, float brigthness, float drag, Color color, Color lightColor, float posX, float posY, float speedX, float speedY, float size, int lifetime) {
         this.weight = weight;
         this.brigthness = brigthness;
         this.drag = drag;
@@ -29,6 +30,7 @@ public class Particle {
         this.speedX = speedX;
         this.speedY = speedY;
         this.size = size;
+        this.lifetime = lifetime;
     }
 
     protected void render(FrameBuffer frameBuffer){
@@ -39,10 +41,14 @@ public class Particle {
         frameBuffer.drawRectangle((int)posX, (int)posY, (int)size, (int)size, color);
     }
 
-    protected void update(int delta){
+    protected void update(int delta) throws EndOfLifeException{
+        if(timeSinceCreation>=lifetime && lifetime!=0){
+            throw new EndOfLifeException("Particle expired");
+        }
         speedX += (drag*ParticleEnvironment.windX + weight*gravityX)*delta;
         speedY += (drag*ParticleEnvironment.windY + weight*gravityY)*delta;
         posX += delta*speedX;
         posY += delta*speedY;
+        timeSinceCreation+=delta;
     }
 }
