@@ -1,5 +1,6 @@
 package engine.particle;
 
+import engine.rendering.FrameBuffer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -46,9 +47,9 @@ public class ParticleEmitter {
         }
     }
 
-    public void drawParticles(Graphics g){
+    public void drawParticles(FrameBuffer buffer){
         for(Particle p : particles){
-            p.render(g);
+            p.render(buffer);
         }
     }
 

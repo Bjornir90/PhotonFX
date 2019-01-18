@@ -1,5 +1,6 @@
 package engine.particle;
 
+import engine.rendering.FrameBuffer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -30,11 +31,12 @@ public class Particle {
         this.size = size;
     }
 
-    protected void render(Graphics g){
-        Color oldColor = g.getColor();
+    protected void render(FrameBuffer frameBuffer){
+        /*Color oldColor = g.getColor();
         g.setColor(color);
         g.fillRect(posX, posY, size, size);
-        g.setColor(oldColor);
+        g.setColor(oldColor);*/
+        frameBuffer.drawRectangle((int)posX, (int)posY, (int)size, (int)size, color);
     }
 
     protected void update(int delta){

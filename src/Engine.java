@@ -1,6 +1,7 @@
 import engine.particle.FixedParticleEmitter;
 import engine.particle.ParticleEmitter;
 import engine.particle.ParticleEnvironment;
+import engine.rendering.FrameBuffer;
 import org.newdawn.slick.*;
 
 import java.util.ArrayList;
@@ -9,6 +10,9 @@ public class Engine extends BasicGame {
     private ParticleEmitter emitter, emitter2;
     private ArrayList<FixedParticleEmitter> fixedEmitters;
     private int timeSinceWindChange;
+    private FrameBuffer buffer;
+
+
     public Engine(){
         super("PhotonFXDemo");
     }
@@ -18,6 +22,7 @@ public class Engine extends BasicGame {
 
         ParticleEnvironment.windX = 0.4f;
         timeSinceWindChange = 0;
+        buffer = new FrameBuffer(1920, 1080);
 
         gameContainer.getInput().addKeyListener(new KeyListener() {
             @Override
@@ -68,8 +73,8 @@ public class Engine extends BasicGame {
         emitter2 = new ParticleEmitter(0.0001f, 0.0f, 0.000002f, 2.0f, Color.blue, null, 1000, 450);
         emitter2.setEmission(0.0f, -0.2f, 0.05f, 0.02f);
         fixedEmitters = new ArrayList<>();
-        for(int i = 0; i<318; i++){
-            FixedParticleEmitter emitter = new FixedParticleEmitter(0.0f, 0.0f, 0.0002f+(float)(Math.random()/10000), 2.0f, Color.green, null,10+i*6.0f, 500, 0.0f, 2.0f);
+        for(int i = 0; i<310; i++){
+            FixedParticleEmitter emitter = new FixedParticleEmitter(0.0f, 0.0f, 0.0002f+(float)(Math.random()/10000), 2.0f, Color.green, null,35+i*6.0f, 500, 0.0f, 2.0f);
             emitter.emitParticles(7+(int)(Math.random()*5));
             fixedEmitters.add(emitter);
         }
@@ -100,12 +105,14 @@ public class Engine extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        emitter.drawParticles(graphics);
+        buffer.resetBuffer();
+        emitter.drawParticles(buffer);
         graphics.setColor(Color.red);
         graphics.fillRect(400, 400, 4, 4);
-        emitter2.drawParticles(graphics);
+        emitter2.drawParticles(buffer);
         for(FixedParticleEmitter emitter : fixedEmitters){
-            emitter.drawParticles(graphics);
+            emitter.drawParticles(buffer);
         }
+        buffer.renderImage(graphics);
     }
 }
