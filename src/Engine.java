@@ -29,7 +29,7 @@ public class Engine extends BasicGame {
 
         //initialize the buffer
         buffer = new FrameBuffer(1920, 1080);
-        buffer.addLightSource(new LightSource(Color.white, 50.0f, 300.0f, 450.0f));
+        buffer.addLightSource(new LightSource(Color.white, 5.0f, 800.0f, 450.0f));
 
         gameContainer.getInput().addKeyListener(new KeyListener() {
             @Override
@@ -75,7 +75,7 @@ public class Engine extends BasicGame {
 
 
         //Create all emitters
-        emitter = new ParticleEmitter(0.0f, 0.0f, 0.00001f, 2.0f, Color.white, null, 400, 400, 8000);
+        emitter = new ParticleEmitter(0.0f, 0.0f, 0.00001f, 2.0f, Color.white, null, 400, 400, 18000);
         emitter.setEmission(0.0f, -0.01f, 0.002f, 0.0f);
         emitter.setInterval(50);
         emitter2 = new ParticleEmitter(0.0001f, 0.0f, 0.000002f, 2.0f, Color.blue, null, 1000, 450, 4000);

@@ -4,15 +4,18 @@ import engine.lighting.LightSource;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class FrameBuffer {
 	private Pixel[][] img;
 	private ArrayList<LightSource> lightSources;
 	private int width, height;
+	private Pixel[][] previousImg;
 
 	public FrameBuffer(int width, int height) {
 		img = new Pixel[width][height];
+		previousImg = new Pixel[width][height];
 		this.width = width;
 		this.height = height;
 		lightSources = new ArrayList<>();
@@ -23,12 +26,13 @@ public class FrameBuffer {
 			for(int x = 0; x<img.length; x++){
 				Pixel pixel = img[x][y];
 				if(pixel == null){
-					/*g.setColor(Color.black);
-					g.fillRect(x, y, 1, 1);*/
 					continue;
 				}
-				for(LightSource ls : lightSources){
-					pixel.shade(ls.getIntensityAt(x, y));
+				if(!pixel.equals(previousImg[x][y])) {
+					previousImg[x][y] = pixel;
+					for (LightSource ls : lightSources) {
+						pixel.shade(ls.getIntensityAt(x, y));
+					}
 				}
 				pixel.render(g);
 			}
