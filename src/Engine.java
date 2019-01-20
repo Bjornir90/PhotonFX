@@ -84,6 +84,58 @@ public class Engine extends BasicGame {
             }
         });
 
+        gameContainer.getInput().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseWheelMoved(int i) {
+
+            }
+
+            @Override
+            public void mouseClicked(int i, int i1, int i2, int i3) {
+
+            }
+
+            @Override
+            public void mousePressed(int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void mouseReleased(int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void mouseMoved(int i, int i1, int i2, int i3) {
+                ls.setPosition(i2, i3);
+            }
+
+            @Override
+            public void mouseDragged(int i, int i1, int i2, int i3) {
+
+            }
+
+            @Override
+            public void setInput(Input input) {
+
+            }
+
+            @Override
+            public boolean isAcceptingInput() {
+                return true;
+            }
+
+            @Override
+            public void inputEnded() {
+
+            }
+
+            @Override
+            public void inputStarted() {
+
+            }
+        });
+
 
         //Create all emitters
         emitter = new ParticleEmitter(0.0f, 0.0f, 0.00001f, 2.0f, Color.white, null, 400, 400, 18000);

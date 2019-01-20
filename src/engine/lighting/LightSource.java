@@ -41,6 +41,11 @@ public class LightSource {
         LightingCore.removeLightSource(this);
     }
 
+    public void setPosition(float x, float y){
+        this.x = x;
+        this.y = y;
+    }
+
     public boolean isTurnedOn(){
         return turnedOn;
     }
