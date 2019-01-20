@@ -34,11 +34,14 @@ public class Particle {
     }
 
     protected void render(FrameBuffer frameBuffer){
-        /*Color oldColor = g.getColor();
+        frameBuffer.drawRectangle((int)posX, (int)posY, (int)size, (int)size, color);
+    }
+
+    protected void render(Graphics g){
+        Color oldColor = g.getColor();
         g.setColor(color);
         g.fillRect(posX, posY, size, size);
-        g.setColor(oldColor);*/
-        frameBuffer.drawRectangle((int)posX, (int)posY, (int)size, (int)size, color);
+        g.setColor(oldColor);
     }
 
     protected void update(int delta) throws EndOfLifeException{

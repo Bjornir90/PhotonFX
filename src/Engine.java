@@ -1,4 +1,5 @@
 import engine.lighting.LightSource;
+import engine.lighting.LightingCore;
 import engine.particle.FixedParticleEmitter;
 import engine.particle.ParticleEmitter;
 import engine.particle.ParticleEnvironment;
@@ -13,6 +14,7 @@ public class Engine extends BasicGame {
     private ArrayList<FixedParticleEmitter> fixedEmitters;
     private int timeSinceWindChange;
     private FrameBuffer buffer;
+    private boolean useShader;
 
 
     public Engine(){
@@ -26,10 +28,18 @@ public class Engine extends BasicGame {
         //set up environment and prepare automatic wind changes
         ParticleEnvironment.windX = 0.4f;
         timeSinceWindChange = 0;
+        useShader = true;
+
+        LightSource ls = new LightSource(Color.white, 5.0f, 800.0f, 450.0f);
+
 
         //initialize the buffer
-        buffer = new FrameBuffer(1920, 1080);
-        buffer.addLightSource(new LightSource(Color.white, 5.0f, 800.0f, 450.0f));
+        if(!useShader) {
+            buffer = new FrameBuffer(1920, 1080);
+            buffer.addLightSource(ls);
+        } else {
+            LightingCore.initLighting();
+        }
 
         gameContainer.getInput().addKeyListener(new KeyListener() {
             @Override
@@ -115,15 +125,27 @@ public class Engine extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        //empty the buffer, so we have no ghost particles
-        buffer.resetBuffer();
-        emitter.drawParticles(buffer);
-        graphics.setColor(Color.red);
-        graphics.fillRect(400, 400, 4, 4);
-        emitter2.drawParticles(buffer);
-        for(FixedParticleEmitter emitter : fixedEmitters){
+
+        if(!useShader) {
+            //empty the buffer, so we have no ghost particles
+            buffer.resetBuffer();
             emitter.drawParticles(buffer);
+            buffer.drawRectangle(400, 400, 4, 4, Color.red);
+            emitter2.drawParticles(buffer);
+            for (FixedParticleEmitter emitter : fixedEmitters) {
+                emitter.drawParticles(buffer);
+            }
+            buffer.renderImage(graphics);
+        } else {
+            LightingCore.startRendering();
+            emitter.drawParticles(graphics);
+            graphics.setColor(Color.red);
+            graphics.fillRect(400, 400, 4, 4);
+            emitter2.drawParticles(graphics);
+            for (FixedParticleEmitter emitter : fixedEmitters) {
+                emitter.drawParticles(graphics);
+            }
+            LightingCore.endRendering();
         }
-        buffer.renderImage(graphics);
     }
 }

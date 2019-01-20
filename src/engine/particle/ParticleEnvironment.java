@@ -1,6 +1,6 @@
 package engine.particle;
 
-public class ParticleEnvironment {
+public final class ParticleEnvironment {
     public static float windX, windY, gravityX, gravityY;
 
     //Default values

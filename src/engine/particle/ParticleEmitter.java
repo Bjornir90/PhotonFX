@@ -54,6 +54,12 @@ public class ParticleEmitter {
         }
     }
 
+    public void drawParticles(Graphics g){
+        for(Particle p : particles){
+            p.render(g);
+        }
+    }
+
     public void updateParticles(int delta){
         if(interval != 0){
             timeSinceLastEmission += delta;
