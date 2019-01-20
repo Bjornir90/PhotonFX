@@ -14,7 +14,7 @@ public class LightSource {
         this.x = x;
         this.y = y;
         fallof = 2;
-        turnOn();
+        turnedOn = false;
     }
 
     public void setFallof(int fallof) {

@@ -50,6 +50,7 @@ public final class LightingCore {
 
         //pass the number of lights in the scene
         shader.setUniform1i("nbOfLights", nbLightsActual);
+        System.out.println("nbLightsActual = " + nbLightsActual);
 
         for(int i = 0; i<nbLightsActual; i++){
             LightSource ls = lightSources.get(i);
@@ -58,6 +59,7 @@ public final class LightingCore {
             shader.setUniform2f("lights["+i+"].position", ls.x, ls.y);
             shader.setUniform3f("lights["+i+"].color", ls.lightColor.r, ls.lightColor.g, ls.lightColor.b);
             shader.setUniform1f("lights["+i+"].fallof", ls.fallof);
+            shader.setUniform1f("lights["+i+"].brightness", ls.brightness);
         }
     }
 

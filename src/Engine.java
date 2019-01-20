@@ -30,7 +30,7 @@ public class Engine extends BasicGame {
         timeSinceWindChange = 0;
         useShader = true;
 
-        LightSource ls = new LightSource(Color.white, 5.0f, 800.0f, 450.0f);
+        LightSource ls = new LightSource(Color.white, 100000.0f, 800.0f, 450.0f);
 
 
         //initialize the buffer
@@ -38,6 +38,7 @@ public class Engine extends BasicGame {
             buffer = new FrameBuffer(1920, 1080);
             buffer.addLightSource(ls);
         } else {
+            ls.turnOn();
             LightingCore.initLighting();
         }
 
