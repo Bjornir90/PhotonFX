@@ -1,8 +1,10 @@
+import engine.lighting.LightSource;
 import engine.particle.FixedParticleEmitter;
 import engine.particle.ParticleEmitter;
 import engine.particle.ParticleEnvironment;
 import engine.rendering.FrameBuffer;
 import org.newdawn.slick.*;
+
 
 import java.util.ArrayList;
 
@@ -20,9 +22,14 @@ public class Engine extends BasicGame {
     public void init(GameContainer gameContainer) throws SlickException {
         gameContainer.setTargetFrameRate(60);
 
+
+        //set up environment and prepare automatic wind changes
         ParticleEnvironment.windX = 0.4f;
         timeSinceWindChange = 0;
+
+        //initialize the buffer
         buffer = new FrameBuffer(1920, 1080);
+        buffer.addLightSource(new LightSource(Color.white, 50.0f, 300.0f, 450.0f));
 
         gameContainer.getInput().addKeyListener(new KeyListener() {
             @Override
@@ -67,12 +74,15 @@ public class Engine extends BasicGame {
         });
 
 
+        //Create all emitters
         emitter = new ParticleEmitter(0.0f, 0.0f, 0.00001f, 2.0f, Color.white, null, 400, 400, 8000);
         emitter.setEmission(0.0f, -0.01f, 0.002f, 0.0f);
         emitter.setInterval(50);
         emitter2 = new ParticleEmitter(0.0001f, 0.0f, 0.000002f, 2.0f, Color.blue, null, 1000, 450, 4000);
         emitter2.setEmission(0.0f, -0.2f, 0.05f, 0.02f);
         fixedEmitters = new ArrayList<>();
+
+        //Create emitters for the grass
         for(int i = 0; i<310; i++){
             FixedParticleEmitter emitter = new FixedParticleEmitter(0.0f, 0.0f, 0.0002f+(float)(Math.random()/10000), 2.0f, Color.green, null,35+i*6.0f, 500, 0.0f, 2.0f, 0);
             emitter.emitParticles(7+(int)(Math.random()*5));
@@ -105,6 +115,7 @@ public class Engine extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+        //empty the buffer, so we have no ghost particles
         buffer.resetBuffer();
         emitter.drawParticles(buffer);
         graphics.setColor(Color.red);

@@ -21,8 +21,11 @@ public class Pixel {
 		g.setColor(oldColor);
 	}
 
-	public void shade(float rShading, float gShading, float bShading){
-		Color newShadedColor = new Color(color.r*rShading, color.g*gShading, color.b*bShading);
+	public void shade(Color incidentLightColor){
+		System.out.println("incidentLightColor = " + incidentLightColor);
+		Color newShadedColor = new Color(color);
+		newShadedColor = newShadedColor.multiply(incidentLightColor);
+		System.out.println("newShadedColor = " + newShadedColor);
 		shadedColor = newShadedColor;
 	}
 
