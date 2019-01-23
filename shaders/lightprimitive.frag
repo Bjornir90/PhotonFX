@@ -17,11 +17,12 @@ varying vec2 fragPos;
 varying vec4 color;
 
 void main() {
-    vec3 finalColor = color.rgb;
+    vec3 objectColor = color.rgb;
+    vec3 finalColor = vec3(0);
     for(int i = 0; i<nbOfLights; i++){
             float distance = length(fragPos - lights[i].position);
             float brightness = lights[i].brightness/(lights[i].quadraticFalloff*pow(distance, 2)+distance*lights[i].falloff);
-            finalColor = finalColor*lights[i].color*vec3(brightness);
+            finalColor += objectColor*lights[i].color*vec3(brightness);
     }
 	gl_FragColor = vec4(finalColor, color.a);
 }
