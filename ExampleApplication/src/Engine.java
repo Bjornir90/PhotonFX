@@ -15,6 +15,8 @@ public class Engine extends BasicGame {
     private int timeSinceWindChange;
     private FrameBuffer buffer;
     private boolean useShader;
+    private Image imgTest;
+    private float imgX = 500.0f, imgY = 2.0f;
 
 
     public Engine(){
@@ -31,6 +33,7 @@ public class Engine extends BasicGame {
         useShader = true;
 
         LightSource ls = new LightSource(Color.white, 100000.0f, 800.0f, 450.0f);
+        imgTest = new Image("GrassTile.png");
 
 
         //initialize the buffer
@@ -75,6 +78,9 @@ public class Engine extends BasicGame {
                     case Input.KEY_ESCAPE:
                         gameContainer.exit();
                         break;
+                    case Input.KEY_UP:
+                        imgY--;
+                        break;
                 }
             }
 
@@ -97,6 +103,8 @@ public class Engine extends BasicGame {
 
             @Override
             public void mousePressed(int i, int i1, int i2) {
+                imgX = i1;
+                imgY = i2;
 
             }
 
@@ -190,7 +198,7 @@ public class Engine extends BasicGame {
             }
             buffer.renderImage(graphics);
         } else {
-            LightingCore.startRendering();
+            LightingCore.startPrimRendering();
             emitter.drawParticles(graphics);
             graphics.setColor(Color.red);
             graphics.fillRect(400, 400, 4, 4);
@@ -198,7 +206,11 @@ public class Engine extends BasicGame {
             for (FixedParticleEmitter emitter : fixedEmitters) {
                 emitter.drawParticles(graphics);
             }
-            LightingCore.endRendering();
+            LightingCore.endPrimRendering();
+            LightingCore.startTexRendering();
+            imgTest.draw(imgX, imgY, 32, 32);
+            LightingCore.endTexRendering();
+            graphics.drawString(graphics.getPixel(((int)imgX)+1, ((int)imgY)+1).toString(), 10, 80);
         }
     }
 }
