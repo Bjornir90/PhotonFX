@@ -5,7 +5,7 @@ import org.newdawn.slick.Color;
 public class LightSource {
     protected Color lightColor;
     protected float brightness, x, y;
-    protected int fallof;
+    protected float falloff, quadraticFalloff;
     protected boolean turnedOn;
 
     public LightSource(Color lightColor, float brightness, float x, float y) {
@@ -13,21 +13,30 @@ public class LightSource {
         this.brightness = brightness;
         this.x = x;
         this.y = y;
-        fallof = 2;
+        falloff = 1.0f;
+        quadraticFalloff = 0.0f;
         turnedOn = false;
     }
 
-    public void setFallof(int fallof) {
-        this.fallof = fallof;
+    public void setFalloff(float falloff) {
+        this.falloff = falloff;
     }
 
-    public int getFallof() {
-        return fallof;
+    public float getFalloff() {
+        return falloff;
+    }
+
+    public float getQuadraticFalloff() {
+        return quadraticFalloff;
+    }
+
+    public void setQuadraticFalloff(float quadraticFalloff) {
+        this.quadraticFalloff = quadraticFalloff;
     }
 
     public Color getIntensityAt(float x, float y){
         double distance = Math.sqrt(Math.pow((this.x-x), 2) + Math.pow(this.y-y, 2));
-        Color correctedLight = lightColor.brighter((float) (brightness*10000/Math.pow(distance, fallof))-1.0f);
+        Color correctedLight = lightColor.brighter((float) (brightness*10000/Math.pow(distance, falloff))-1.0f);
         return correctedLight;
     }
 

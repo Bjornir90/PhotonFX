@@ -32,7 +32,7 @@ public class Engine extends BasicGame {
         timeSinceWindChange = 0;
         useShader = true;
 
-        LightSource ls = new LightSource(Color.white, 100000.0f, 800.0f, 450.0f);
+        LightSource ls = new LightSource(Color.white, 200.0f, 800.0f, 450.0f);
         imgTest = new Image("GrassTile.png");
 
 
@@ -41,8 +41,8 @@ public class Engine extends BasicGame {
             buffer = new FrameBuffer(1920, 1080);
             buffer.addLightSource(ls);
         } else {
-            ls.turnOn();
             LightingCore.initLighting();
+            ls.turnOn();
         }
 
         gameContainer.getInput().addKeyListener(new KeyListener() {
@@ -208,9 +208,10 @@ public class Engine extends BasicGame {
             }
             LightingCore.endPrimRendering();
             LightingCore.startTexRendering();
-            imgTest.draw(imgX, imgY, 32, 32);
+            imgTest.startUse();
+            imgTest.drawEmbedded(imgX, imgY, 32, 32);
+            imgTest.endUse();
             LightingCore.endTexRendering();
-            graphics.drawString(graphics.getPixel(((int)imgX)+1, ((int)imgY)+1).toString(), 10, 80);
         }
     }
 }

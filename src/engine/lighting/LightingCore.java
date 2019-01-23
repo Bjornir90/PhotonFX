@@ -50,24 +50,28 @@ public final class LightingCore {
         shaderPrim.unbind();
     }
 
-    public static void startPrimRendering(){
-        //bind the shaderPrim
-        bindPrimLighting();
-
+    private static void passUniform(ShaderProgram shader){
         int nbLightsActual = lightSources.size();
 
         //pass the number of lights in the scene
-        shaderPrim.setUniform1i("nbOfLights", nbLightsActual);
+        shader.setUniform1i("nbOfLights", nbLightsActual);
 
         for(int i = 0; i<nbLightsActual; i++){
             LightSource ls = lightSources.get(i);
 
-            //set the position, color and fallof of the light in the corresponding uniforms
-            shaderPrim.setUniform2f("lights["+i+"].position", ls.x, ls.y);
-            shaderPrim.setUniform3f("lights["+i+"].color", ls.lightColor.r, ls.lightColor.g, ls.lightColor.b);
-            shaderPrim.setUniform1f("lights["+i+"].fallof", ls.fallof);
-            shaderPrim.setUniform1f("lights["+i+"].brightness", ls.brightness);
+            //set the position, color and falloff of the light in the corresponding uniforms
+            shader.setUniform2f("lights["+i+"].position", ls.x, ls.y);
+            shader.setUniform3f("lights["+i+"].color", ls.lightColor.r, ls.lightColor.g, ls.lightColor.b);
+            shader.setUniform1f("lights["+i+"].falloff", ls.falloff);
+            shader.setUniform1f("lights["+i+"].quadraticFalloff", ls.quadraticFalloff);
+            shader.setUniform1f("lights["+i+"].brightness", ls.brightness);
         }
+    }
+
+    public static void startPrimRendering(){
+        //bind the shaderPrim
+        bindPrimLighting();
+        passUniform(shaderPrim);
     }
 
     public static void endPrimRendering(){
@@ -85,22 +89,9 @@ public final class LightingCore {
     public static void startTexRendering(){
         //bind the shaderTex
         bindTexLighting();
-
-        int nbLightsActual = lightSources.size();
-
-        //pass the number of lights in the scene
-        shaderTex.setUniform1i("nbOfLights", nbLightsActual);
+        passUniform(shaderTex);
         shaderTex.setUniform1i("tex", 0);
 
-        for(int i = 0; i<nbLightsActual; i++){
-            LightSource ls = lightSources.get(i);
-
-            //set the position, color and fallof of the light in the corresponding uniforms
-            shaderTex.setUniform2f("lights["+i+"].position", ls.x, ls.y);
-            shaderTex.setUniform3f("lights["+i+"].color", ls.lightColor.r, ls.lightColor.g, ls.lightColor.b);
-            shaderTex.setUniform1f("lights["+i+"].fallof", ls.fallof);
-            shaderTex.setUniform1f("lights["+i+"].brightness", ls.brightness);
-        }
     }
 
     public static void endTexRendering(){
