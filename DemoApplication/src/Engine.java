@@ -15,7 +15,7 @@ public class Engine extends BasicGame {
     private int timeSinceWindChange;
     private FrameBuffer buffer;
     private boolean useShader;
-    private Image imgTest;
+    //private Image imgTest;
     private float imgX = 500.0f, imgY = 2.0f;
 
 
@@ -33,7 +33,7 @@ public class Engine extends BasicGame {
         useShader = true;
 
         LightSource ls = new LightSource(Color.white, 200.0f, 800.0f, 450.0f);
-        imgTest = new Image("GrassTile.png");
+        //imgTest = new Image("GrassTile.png");
 
 
         //initialize the buffer
@@ -208,9 +208,9 @@ public class Engine extends BasicGame {
             }
             LightingCore.endPrimRendering();
             LightingCore.startTexRendering();
-            imgTest.startUse();
+            /*imgTest.startUse();
             imgTest.drawEmbedded(imgX, imgY, 32, 32);
-            imgTest.endUse();
+            imgTest.endUse();*/
             LightingCore.endTexRendering();
         }
     }
